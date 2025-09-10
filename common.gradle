@@ -2,12 +2,20 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.github.hierynomus.license'
 apply plugin: 'fabric-loom'
 apply plugin: 'com.replaymod.preprocess'
-apply plugin: 'me.fallenbreath.yamlang'
 
 int mcVersion = project.mcVersion
 
 repositories {
-	maven {
+    maven {
+        url 'https://masa.dy.fi/maven'
+    }
+    maven {
+        url 'https://maven.terraformersmc.com/releases'
+    }
+    maven {
+        url 'https://www.cursemaven.com'
+    }
+    maven {
 		url = 'https://jitpack.io'
 	}
 	maven {
@@ -31,7 +39,7 @@ dependencies {
 //		modRuntimeOnly(mcVersion < 11900 ? "com.github.astei:lazydfu:0.1.2" : "com.github.Fallen-Breath:lazydfu:a7cfc44c0c")
 //	}
 //	// [FEATURE] MIXIN_AUDITOR
-//	modRuntimeOnly 'me.fallenbreath:mixin-auditor:0.1.0'
+	modRuntimeOnly 'me.fallenbreath:mixin-auditor:0.1.0'
 
 	// dependencies
 //	def fabricApiModules = ["fabric-resource-loader-v0"]
@@ -41,14 +49,20 @@ dependencies {
 //	fabricApiModules.forEach {
 //		include(modImplementation(fabricApi.module(it, project.fabric_api_version)))
 //	}
-//	include(modImplementation("me.fallenbreath:conditional-mixin-fabric:${project.conditionalmixin_version}"))
-//	if (mcVersion < 12005) {
-//		include("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}")
-//	}
+	include(modImplementation("me.fallenbreath:conditional-mixin-fabric:${project.conditionalmixin_version}"))
+	if (mcVersion < 12005) {
+		include("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}")
+	}
+
+    if (!project.hasProperty("malilib_projectid") || mcVersion < 12005) {
+        modImplementation "fi.dy.masa.malilib:${project.malilib_version}"
+    } else {
+        modImplementation "com.github.sakura-ryoko:${project.malilib_version}"
+    }
 }
 
-String MIXIN_CONFIG_PATH = 'template_mod.mixins.json'
-String LANG_DIR = 'assets/template_mod/lang'
+String MIXIN_CONFIG_PATH = 'adv-keybind-manager.mixins.json'
+//String LANG_DIR = 'assets/adv-keybind-manager/lang'
 JavaVersion JAVA_COMPATIBILITY
 if (mcVersion >= 12005) {
 	JAVA_COMPATIBILITY = JavaVersion.VERSION_21
@@ -69,15 +83,15 @@ loom {
 		runDir '../../run'
 		vmArgs commonVmArgs
 	}
-//	// [FEATURE] MIXIN_AUDITOR
-//	runs {
-//		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
-//		serverMixinAudit {
-//			server()
-//			vmArgs auditVmArgs
-//			ideConfigGenerated false
-//		}
-//	}
+	// [FEATURE] MIXIN_AUDITOR
+	runs {
+		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
+		serverMixinAudit {
+			server()
+			vmArgs auditVmArgs
+			ideConfigGenerated false
+		}
+	}
 }
 
 String modVersionSuffix = ''
@@ -128,6 +142,7 @@ processResources {
 				"name": project.mod_name,
 				"version": fullModVersion,
 				"minecraft_dependency": project.minecraft_dependency,
+                "malilib_dependency": project.malilib_dependency,
 		]
 		expand valueMap
 	}
@@ -138,10 +153,10 @@ processResources {
 }
 
 // https://github.com/Fallen-Breath/yamlang
-yamlang {
-	targetSourceSets = [sourceSets.main]
-	inputDir = LANG_DIR
-}
+//yamlang {
+//	targetSourceSets = [sourceSets.main]
+//	inputDir = LANG_DIR
+//}
 
 // ensure that the encoding is set to UTF-8, no matter what the system default is
 // this fixes some edge cases with special characters not displaying correctly
@@ -199,7 +214,7 @@ license {
 	}
 	ext {
 		name = project.mod_name
-		author = 'Fallen_Breath'
+		author = 'Sakura-Ryoko'
 		year = Calendar.getInstance().get(Calendar.YEAR).toString()
 	}
 }
@@ -207,19 +222,19 @@ classes.dependsOn licenseFormatMain
 testClasses.dependsOn licenseFormatTest
 
 // configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-			artifactId = base.archivesName.get()
-			version = fullArtifactVersion
-		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
-		// mavenLocal()
-
+//publishing {
+//	publications {
+//		mavenJava(MavenPublication) {
+//			from components.java
+//			artifactId = base.archivesName.get()
+//			version = fullArtifactVersion
+//		}
+//	}
+//
+//	// select the repositories you want to publish to
+//	repositories {
+//		// mavenLocal()
+//
 //		// [FEATURE] FALLENS_MAVEN
 //		maven {
 //			url = fullArtifactVersion.endsWith("SNAPSHOT") ? "https://maven.fallenbreath.me/snapshots" : "https://maven.fallenbreath.me/releases"
@@ -231,5 +246,5 @@ publishing {
 //				basic(BasicAuthentication)
 //			}
 //		}
-	}
-}
+//	}
+//}

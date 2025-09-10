@@ -4,29 +4,32 @@
   "version": "${version}",
 
   "name": "${name}",
-  "description": "Template for my fabric mods",
+  "description": "Advanced Keybind Manager fabric mods utilizing MaLiLib",
   "authors": [
-    "Fallen_Breath"
+    "Sakura-Ryoko"
   ],
   "contact": {
     "homepage": "https://modrinth.com",
-    "sources": "https://github.com/Fallen-Breath/fabric-mod-template"
+    "sources": "https://github.com/sakura-ryoko/advanced-keybind-manager"
   },
 
-  "icon": "assets/template_mod/icon.png",
+  "icon": "assets/adv_keybind_manager/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.fallenbreath.template_mod.TemplateMod"
+      "com.sakuraryoko.adv_keybind_manager.AdvKeybindManager"
     ]
   },
   "mixins": [
-    "template_mod.mixins.json"
+    "adv_keybind_manager.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.11.4",
-    "minecraft": "${minecraft_dependency}"
+    "minecraft": "${minecraft_dependency}",
+    "malilib": "${malilib_dependency}",
+    "conditional-mixin": ">=0.2.0",
+    "mixinextras": ">=0.3.0"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "adv_keybind_manager.config.generic.comment.debugMessages": "Debug Logging",
+  "adv_keybind_manager.config.generic.name.debugMessages": "debugMessages",
+  "adv_keybind_manager.config.hotkeys.comment.openConfigGui": "Open Config",
+  "adv_keybind_manager.config.hotkeys.name.openConfigGui": "openConfigGui"
+}

@@ -1,12 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.fallenbreath.template_mod.mixins",
+  "package": "com.sakuraryoko.adv_keybind_manager.mixins",
   "compatibilityLevel": "{{COMPATIBILITY_LEVEL}}",
-  "mixins": [
-    "MinecraftServerMixin"
-  ],
+  "mixins": [],
   "client": [
+    "MixinInputUtil_Type"
   ],
   "injectors": {
     "defaultRequire": 1
