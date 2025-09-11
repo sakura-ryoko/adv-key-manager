@@ -18,22 +18,33 @@
  * along with Advanced Keybind Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.sakuraryoko.adv_keybind_manager;
+package com.sakuraryoko.adv_keybind_manager.event;
 
-import fi.dy.masa.malilib.util.StringUtils;
-import net.minecraft.SharedConstants;
+import com.sakuraryoko.adv_keybind_manager.Reference;
+import com.sakuraryoko.adv_keybind_manager.config.Hotkeys;
+import fi.dy.masa.malilib.hotkeys.*;
 
-public class Reference
+public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IMouseInputHandler
 {
-    public static final String MOD_ID = "adv_keybind_manager";
-    public static final String MOD_NAME = "Advanced Keybind Manager";
-    public static final String MOD_SHORT_NAME = "Adv Keybind Manager";
-    public static final String MOD_VERSION = StringUtils.getModVersionString(MOD_ID);
-//#if MC >= 12106
-//$$ public static final String MC_VERSION = SharedConstants.getGameVersion().name();
-//#else
-    public static final String MC_VERSION = SharedConstants.getGameVersion().getName();
-//#endif
-    public static final String MOD_TYPE = "fabric";
-    public static final String MOD_STRING = MOD_ID + "-" + MOD_TYPE + "-" + MC_VERSION + "-" + MOD_VERSION;
+    private final KeybindCallbacks callbacks;
+
+    public InputHandler()
+    {
+        this.callbacks = KeybindCallbacks.getInstance();
+    }
+
+    @Override
+    public void addKeysToMap(IKeybindManager manager)
+    {
+        for (IHotkey hotkey : Hotkeys.HOTKEY_LIST)
+        {
+            manager.addKeybindToMap(hotkey.getKeybind());
+        }
+    }
+
+    @Override
+    public void addHotkeys(IKeybindManager manager)
+    {
+        manager.addHotkeysForCategory(Reference.MOD_NAME, "adv_keybind_manager.hotkeys.category.hotkeys", Hotkeys.HOTKEY_LIST);
+    }
 }

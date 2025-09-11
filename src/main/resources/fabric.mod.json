@@ -15,10 +15,13 @@
 
   "icon": "assets/adv_keybind_manager/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "com.sakuraryoko.adv_keybind_manager.AdvKeybindManager"
+    ],
+    "modmenu": [
+      "com.sakuraryoko.adv_keybind_manager.compat.modmenu.ModMenuImpl"
     ]
   },
   "mixins": [
