@@ -1,38 +1,35 @@
 {
-  "schemaVersion": 1,
-  "id": "${id}",
-  "version": "${version}",
-
-  "name": "${name}",
-  "description": "Advanced Keybind Manager fabric mods utilizing MaLiLib",
-  "authors": [
-    "Sakura-Ryoko"
-  ],
-  "contact": {
-    "homepage": "https://modrinth.com",
-    "sources": "https://github.com/sakura-ryoko/advanced-keybind-manager"
-  },
-
-  "icon": "assets/adv_keybind_manager/icon.png",
-
-  "environment": "client",
-  "entrypoints": {
-    "main": [
-      "com.sakuraryoko.adv_keybind_manager.AdvKeybindManager"
+    "schemaVersion": 1,
+    "id": "${id}",
+    "version": "${version}",
+    "name": "${name}",
+    "description": "Advanced Keybind Manager fabric mods utilizing MaLiLib",
+    "authors": [
+        "Sakura-Ryoko"
     ],
-    "modmenu": [
-      "com.sakuraryoko.adv_keybind_manager.compat.modmenu.ModMenuImpl"
-    ]
-  },
-  "mixins": [
-    "adv_keybind_manager.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.11.4",
-    "minecraft": "${minecraft_dependency}",
-    "malilib": "${malilib_dependency}",
-    "conditional-mixin": ">=0.2.0",
-    "mixinextras": ">=0.3.0"
-  }
+    "contact": {
+        "homepage": "https://modrinth.com",
+        "sources": "https://github.com/sakura-ryoko/advanced-keybind-manager"
+    },
+    "icon": "assets/adv_keybind_manager/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "main": [
+            "com.sakuraryoko.adv_keybind_manager.AdvKeybindManager"
+        ],
+        "modmenu": [
+            "com.sakuraryoko.adv_keybind_manager.compat.modmenu.ModMenuImpl"
+        ]
+    },
+    "mixins": [
+        "adv_keybind_manager.mixins.json"
+    ],
+    "accessWidener": "adv_keybind_manager.accesswidener",
+    "depends": {
+        "fabricloader": ">=0.11.4",
+        "minecraft": "${minecraft_dependency}",
+        "malilib": "${malilib_dependency}",
+        "conditional-mixin": ">=0.2.0",
+        "mixinextras": ">=0.3.0"
+    }
 }

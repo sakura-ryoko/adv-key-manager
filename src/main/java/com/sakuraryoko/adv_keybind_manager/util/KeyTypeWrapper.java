@@ -57,7 +57,22 @@ public class KeyTypeWrapper
         return this.type.getName();
     }
 
-    protected JsonElement toJson()
+	public boolean isKeyboard()
+	{
+		return this.type == KeyType.KEYBOARD;
+	}
+
+	public boolean isMouse()
+	{
+		return this.type == KeyType.MOUSE;
+	}
+
+	public boolean isScancode()
+	{
+		return this.type == KeyType.SCANCODE;
+	}
+
+	protected JsonElement toJson()
     {
         return new JsonPrimitive(this.type.getName());
     }

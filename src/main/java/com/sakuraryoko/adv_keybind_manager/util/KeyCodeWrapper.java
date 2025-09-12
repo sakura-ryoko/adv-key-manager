@@ -123,4 +123,29 @@ public class KeyCodeWrapper
 
         return null;
     }
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+		{
+			return true;
+		}
+		else if (obj != null)
+		{
+			if (this.getClass() == obj.getClass())
+			{
+				KeyCodeWrapper wrapper = (KeyCodeWrapper) obj;
+
+				return (wrapper.keyCode == this.keyCode && wrapper.type.equals(this.type));
+			}
+			else if (InputUtil.KeyCode.class == obj.getClass() &&
+					this.getVanilla() != null)
+			{
+				return this.getVanilla().equals(obj);
+			}
+		}
+
+		return false;
+	}
 }

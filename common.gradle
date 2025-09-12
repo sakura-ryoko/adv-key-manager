@@ -97,6 +97,8 @@ loom {
 			ideConfigGenerated false
 		}
 	}
+
+    accessWidenerPath = file("src/main/resources/adv_keybind_manager.accesswidener")
 }
 
 String modVersionSuffix = ''

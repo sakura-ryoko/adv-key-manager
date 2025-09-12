@@ -26,7 +26,7 @@ public enum KeyType
 {
     KEYBOARD    ("keyboard"),
     MOUSE       ("mouse"),
-    CODE        ("scancode"),
+    SCANCODE	("scancode"),
     ;
 
     private final String name;
@@ -58,7 +58,7 @@ public enum KeyType
         switch (name)
         {
             case "key.mouse": { return KeyType.MOUSE; }
-            case "scancode": { return KeyType.CODE; }
+            case "scancode": { return KeyType.SCANCODE; }
             default: { return KeyType.KEYBOARD; }
         }
     }
@@ -68,7 +68,7 @@ public enum KeyType
         switch (type)
         {
             case "mouse": { return KeyType.MOUSE; }
-            case "scancode": { return KeyType.CODE; }
+            case "scancode": { return KeyType.SCANCODE; }
             default: { return KeyType.KEYBOARD; }
         }
     }
