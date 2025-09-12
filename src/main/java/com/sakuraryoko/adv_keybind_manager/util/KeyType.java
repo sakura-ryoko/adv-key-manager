@@ -53,7 +53,7 @@ public enum KeyType
 
     public static KeyType fromVanilla(InputUtil.Type type)
     {
-        String name = ((IInputUtilInvoker) (Object) type).akm$getName();
+        String name = type.name;
 
         switch (name)
         {

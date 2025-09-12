@@ -18,8 +18,11 @@
  * along with Advanced Keybind Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.sakuraryoko.adv_keybind_manager.util;
+package com.sakuraryoko.adv_keybind_manager.keybind;
 
+import com.sakuraryoko.adv_keybind_manager.util.KeyCodeWrapper;
+import com.sakuraryoko.adv_keybind_manager.util.KeyType;
+import com.sakuraryoko.adv_keybind_manager.util.KeyTypeWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,7 +43,7 @@ public class KeyBindingWrapper
 
 	public KeyBindingWrapper(String id, int scanCode, String category)
 	{
-		this(id, new KeyTypeWrapper(KeyType.KEYBOARD), scanCode, category, id+"."+category);
+		this(id, new KeyTypeWrapper(KeyType.KEYBOARD), scanCode, category, id + "." + category);
 	}
 
 	public KeyBindingWrapper(String id, KeyTypeWrapper type, int scanCode, String category, String translationKey)
@@ -72,13 +75,13 @@ public class KeyBindingWrapper
 		switch (keyCode.getCategory())
 		{
 			case KEYSYM:
-				scanCodeName = InputUtil.getKeycodeName(code);
+				scanCodeName = KeybindUtil.getKeycodeName(code);
 				break;
 			case SCANCODE:
-				scanCodeName = InputUtil.getScancodeName(code);
+				scanCodeName = KeybindUtil.getScancodeName(code);
 				break;
 			case MOUSE:
-				scanCodeName = InputUtil.Type.MOUSE.getName() +"."+ (code + 1);
+				scanCodeName = KeybindUtil.getTypeName(InputUtil.Type.MOUSE) +"."+ (code + 1);
 		}
 
 		return scanCodeName == null ? I18n.translate(keyCodeName) : scanCodeName;
@@ -183,6 +186,6 @@ public class KeyBindingWrapper
 
 	public static KeyBinding getVanillaById(String id)
 	{
-		return null;
+		return KeybindUtil.getByIdVanilla(id);
 	}
 }

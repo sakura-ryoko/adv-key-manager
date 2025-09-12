@@ -4,5 +4,7 @@ accessible field net/minecraft/client/options/KeyBinding keysByCode Ljava/util/M
 accessible field net/minecraft/client/options/KeyBinding keyCategories Ljava/util/Set;
 accessible field net/minecraft/client/options/KeyBinding categoryOrderMap Ljava/util/Map;
 accessible field net/minecraft/client/options/KeyBinding keyCode Lnet/minecraft/client/util/InputUtil$KeyCode;
+accessible field net/minecraft/client/options/KeyBinding pressed Z
+accessible field net/minecraft/client/options/KeyBinding timesPressed I
 accessible field net/minecraft/client/util/InputUtil$KeyCode NAMES Ljava/util/Map;
 accessible field net/minecraft/client/util/InputUtil$Type map Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;

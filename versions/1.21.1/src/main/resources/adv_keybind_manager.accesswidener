@@ -6,3 +6,4 @@ accessible field net/minecraft/client/option/KeyBinding CATEGORY_ORDER_MAP Ljava
 accessible field net/minecraft/client/option/KeyBinding boundKey Lnet/minecraft/client/util/InputUtil$Key;
 accessible field net/minecraft/client/util/InputUtil$Key KEYS Ljava/util/Map;
 accessible field net/minecraft/client/util/InputUtil$Type map Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+accessible field net/minecraft/client/util/InputUtil$Type name Ljava/lang/String;

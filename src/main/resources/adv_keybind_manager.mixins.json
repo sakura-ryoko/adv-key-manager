@@ -4,9 +4,7 @@
     "package": "com.sakuraryoko.adv_keybind_manager.mixins",
     "compatibilityLevel": "{{COMPATIBILITY_LEVEL}}",
     "mixins": [],
-    "client": [
-        "MixinInputUtil_Type"
-    ],
+    "client": [],
     "injectors": {
         "defaultRequire": 1
   }

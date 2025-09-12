@@ -18,16 +18,14 @@
  * along with Advanced Keybind Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.sakuraryoko.adv_keybind_manager.keybind;
+package com.sakuraryoko.adv_keybind_manager.config.option;
 
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
-import net.minecraft.client.options.KeyBinding;
 
+// TODO
 public class ConfigKeybindWrapper extends ConfigHotkey
 {
-    private KeyBinding vanilla;
-
     private ConfigKeybindWrapper(String name, String defaultStorageString, String comment)
     {
         super(name, defaultStorageString, comment);
