@@ -77,6 +77,26 @@ public class KeyTypeWrapper
         return new JsonPrimitive(this.type.getName());
     }
 
+	public static KeyTypeWrapper fromKeyCode(int keyCode, int scanCode)
+	{
+		if (keyCode < -1)
+		{
+			return new KeyTypeWrapper(KeyType.MOUSE);
+		}
+		else if (keyCode == -1)
+		{
+			return new KeyTypeWrapper(KeyType.SCANCODE);
+		}
+		else if (keyCode < 8)
+		{
+			return new KeyTypeWrapper(KeyType.MOUSE);
+		}
+		else
+		{
+			return new KeyTypeWrapper(KeyType.KEYBOARD);
+		}
+	}
+
     protected static KeyTypeWrapper fromJson(JsonObject obj)
     {
         if (obj.isJsonPrimitive())

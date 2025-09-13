@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.sakuraryoko.vkm.util.KeyCodeWrapper;
+import com.sakuraryoko.vkm.util.KeyType;
+
 public class KeybindVanilla implements IKeybind
 {
     private final KeybindSettings settings = KeybindSettings.EXCLUSIVE;
@@ -47,12 +50,14 @@ public class KeybindVanilla implements IKeybind
 
     public int getDefaultKeyCode()
     {
-        return this.keybind.getDefaultKeyCode().getKeyCode();
+		KeyCodeWrapper keyCode = this.keybind.getDefaultKeyCode();
+		return keyCode.getType().isMouse() ? keyCode.getKeyCode() - 100 : keyCode.getKeyCode();
     }
 
     public int getKeyCode()
     {
-        return this.keybind.getKeyCode().getKeyCode();
+		KeyCodeWrapper keyCode = this.keybind.getKeyCode();
+		return keyCode.getType().isMouse() ? keyCode.getKeyCode() - 100 : keyCode.getKeyCode();
     }
 
     @Override
@@ -118,7 +123,15 @@ public class KeybindVanilla implements IKeybind
     @Override
     public void addKey(int keyCode)
     {
-        this.keybind.update(keyCode, -1);
+		KeyType type = KeyType.KEYBOARD;
+
+		if (keyCode < -1)
+		{
+			type = KeyType.MOUSE;
+			keyCode += 100;
+		}
+
+		this.keybind.update(keyCode, -1, type);
     }
 
     @Override
@@ -154,10 +167,38 @@ public class KeybindVanilla implements IKeybind
             return kbv.keybind.matchesKey(this.getKeyCode(), -1) || kbv.keybind.matchesMouse(this.getKeyCode());
         }
 
-        return other.getKeys().getFirst() == this.getKeyCode();
+		if (other.getSettings().getContext() != KeybindSettings.Context.INGAME)
+		{
+			return false;
+		}
+
+		if (this.contextOverlaps(other))
+		{
+			return other.getKeys().getFirst() == this.getKeyCode();
+		}
+
+		return false;
     }
 
-    @Override
+	// Cloned from KeybindMulti
+	public boolean contextOverlaps(IKeybind other)
+	{
+		KeybindSettings settingsOther = other.getSettings();
+		KeybindSettings.Context c1 = this.settings.getContext();
+		KeybindSettings.Context c2 = settingsOther.getContext();
+
+		if (c1 == KeybindSettings.Context.ANY || c2 == KeybindSettings.Context.ANY || c1 == c2)
+		{
+			KeyAction a1 = this.settings.getActivateOn();
+			KeyAction a2 = settingsOther.getActivateOn();
+
+			return a1 == KeyAction.BOTH || a2 == KeyAction.BOTH || a1 == a2;
+		}
+
+		return false;
+	}
+
+	@Override
     public void tick()
     {
         // NO-OP
@@ -220,7 +261,9 @@ public class KeybindVanilla implements IKeybind
     {
         String[] split = value.split(",");
 
-        this.addKey(KeyCodes.getKeyCodeFromName(split[0]));
+		int keyCode = KeyCodes.getKeyCodeFromName(split[0]);
+
+        this.addKey(keyCode);
     }
 
     @Override

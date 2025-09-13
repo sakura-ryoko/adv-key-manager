@@ -22,6 +22,7 @@ package com.sakuraryoko.vkm.event;
 
 import com.sakuraryoko.vkm.config.Hotkeys;
 import com.sakuraryoko.vkm.gui.GuiConfigs;
+import com.sakuraryoko.vkm.keybind.KeybindManager;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
@@ -67,6 +68,11 @@ public class KeybindCallbacks implements IHotkeyCallback
             GuiBase.openGui(new GuiConfigs());
             return true;
         }
+		else if (key == Hotkeys.RESET_ALL_VANILLA_KEYBINDS.getKeybind())
+		{
+			KeybindManager.getInstance().resetAllKeybinds();
+			return true;
+		}
 
         return false;
     }

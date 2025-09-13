@@ -51,8 +51,8 @@ public class KeyCodeWrapper
     public KeyCodeWrapper(String name, int keyCode, KeyTypeWrapper type)
     {
         this.name = name;
+		this.type = type;
         this.keyCode = keyCode;
-        this.type = type;
         this.vanilla = InputUtil.fromName(name);
     }
 

@@ -24,8 +24,14 @@ import java.util.*;
 
 import com.google.common.collect.ImmutableList;
 import com.sakuraryoko.vkm.Reference;
+import com.sakuraryoko.vkm.VanKeyMngr;
 import com.sakuraryoko.vkm.config.option.ConfigKeybindVanilla;
 import fi.dy.masa.malilib.event.InputEventHandler;
+import fi.dy.masa.malilib.gui.Message;
+import fi.dy.masa.malilib.util.InfoUtils;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.options.KeyBinding;
 
 public class KeybindManager
@@ -61,6 +67,7 @@ public class KeybindManager
 
     public void resync()
 	{
+		VanKeyMngr.debugLog("KeybindManager#resync()");
 		this.clear();
 
 		KeybindUtil.MAP_BY_ID.forEach(this::addEach);
@@ -92,4 +99,21 @@ public class KeybindManager
 
         InputEventHandler.getKeybindManager().addHotkeysForCategory(Reference.MOD_ID, "minecraft", this.VANILLA_KEYBINDS);
     }
+
+	public void resetAllKeybinds()
+	{
+		MinecraftClient mc = MinecraftClient.getInstance();
+		VanKeyMngr.debugLog("KeybindManager#resetAllKeybinds()");
+
+		if (mc.currentScreen == null || mc.currentScreen instanceof TitleScreen)
+		{
+			this.resync();
+			this.keybinds.forEach(KeybindWrapper::reset);
+			InfoUtils.showInGameMessage(Message.MessageType.SUCCESS, "vkm.message.reset_all_keybinds.success");
+		}
+		else
+		{
+			InfoUtils.showInGameMessage(Message.MessageType.ERROR, "vkm.message.reset_all_keybinds.error");
+		}
+	}
 }
