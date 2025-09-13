@@ -1,4 +1,4 @@
-apply plugin: 'maven-publish'
+//apply plugin: 'maven-publish'
 apply plugin: 'com.github.hierynomus.license'
 apply plugin: 'fabric-loom'
 apply plugin: 'com.replaymod.preprocess'
@@ -66,8 +66,8 @@ dependencies {
     }
 }
 
-String MIXIN_CONFIG_PATH = 'adv_keybind_manager.mixins.json'
-//String LANG_DIR = 'assets/adv_keybind_manager/lang'
+String MIXIN_CONFIG_PATH = 'adv_key_manager.mixins.json'
+//String LANG_DIR = 'assets/adv_key_manager/lang'
 JavaVersion JAVA_COMPATIBILITY
 if (mcVersion >= 12005) {
 	JAVA_COMPATIBILITY = JavaVersion.VERSION_21
@@ -98,7 +98,7 @@ loom {
 		}
 	}
 
-    accessWidenerPath = file("src/main/resources/adv_keybind_manager.accesswidener")
+    accessWidenerPath = file("src/main/resources/adv_key_manager.accesswidener")
 }
 
 String modVersionSuffix = ''
