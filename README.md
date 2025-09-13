@@ -6,4 +6,4 @@
 Advanced Keybind Manager
 
 ###
-Use this addon to make MaLiLib keybinds to show incompatabilities with Vanilla Keybinds, and also edit the Vanilla keybinds if they conflict.
+Use this addon to make MaLiLib keybinds to show incompatibilities with Vanilla Keybinds, and also edit the Vanilla keybinds if they conflict.
