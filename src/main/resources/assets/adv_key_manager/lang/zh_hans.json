@@ -1,0 +1,12 @@
+{
+    "adv_key_manager.config.generic.comment.debugMessages": "Debug Logging",
+    "adv_key_manager.config.generic.name.debugMessages": "debugMessages",
+    "adv_key_manager.config.hotkeys.comment.openConfigGui": "Open Config",
+    "adv_key_manager.config.hotkeys.name.openConfigGui": "openConfigGui",
+    "adv_key_manager.gui.button.config_gui.generic": "Generic",
+    "adv_key_manager.gui.button.config_gui.hotkeys": "Hotkeys",
+    "adv_key_manager.gui.button.config_gui.vanilla": "Keybinds",
+    "adv_key_manager.gui.title.configs": "Advanced Keybind Manager Configs - %s",
+    "adv_key_manager.hotkeys.category.hotkeys": "Advanced Keybind Manager Hotkeys",
+    "modmenu.descriptionTranslation.adv_key_manager": "An Advanced Keybind Manager for all of your keybinds"
+}
