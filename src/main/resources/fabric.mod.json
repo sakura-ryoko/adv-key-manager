@@ -3,28 +3,28 @@
     "id": "${id}",
     "version": "${version}",
     "name": "${name}",
-    "description": "Advanced Keybind Manager for fabric mods utilizing MaLiLib",
+    "description": "Vanilla Keybind Manager for fabric mods utilizing MaLiLib",
     "authors": [
         "Sakura-Ryoko"
     ],
     "contact": {
         "homepage": "https://modrinth.com",
-        "sources": "https://github.com/sakura-ryoko/adv-key-manager"
+        "sources": "https://github.com/sakura-ryoko/vkm"
     },
-    "icon": "assets/adv_key_manager/icon.png",
+    "icon": "assets/vkm/icon.png",
     "environment": "client",
     "entrypoints": {
         "main": [
-            "com.sakuraryoko.adv_key_manager.AdvKeyManager"
+            "com.sakuraryoko.vkm.VanKeyMngr"
         ],
         "modmenu": [
-            "com.sakuraryoko.adv_key_manager.compat.modmenu.ModMenuImpl"
+            "com.sakuraryoko.vkm.compat.modmenu.ModMenuImpl"
         ]
     },
     "mixins": [
-        "adv_key_manager.mixins.json"
+        "vkm.mixins.json"
     ],
-    "accessWidener": "adv_key_manager.accesswidener",
+    "accessWidener": "vkm.accesswidener",
     "depends": {
         "fabricloader": ">=0.11.4",
         "minecraft": "${minecraft_dependency}",
