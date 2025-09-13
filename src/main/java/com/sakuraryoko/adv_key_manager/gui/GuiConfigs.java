@@ -40,7 +40,7 @@ public class GuiConfigs extends GuiConfigsBase
 
     public GuiConfigs()
     {
-        super(10, 50, Reference.MOD_ID, null, "adv_keybind_manager.gui.title.configs", String.format("%s", Reference.MOD_VERSION));
+        super(10, 50, Reference.MOD_ID, null, "adv_key_manager.gui.title.configs", String.format("%s", Reference.MOD_VERSION));
     }
 
     @Override
@@ -135,9 +135,9 @@ public class GuiConfigs extends GuiConfigsBase
 
     public enum ConfigGuiTab
     {
-        GENERIC ("adv_keybind_manager.gui.button.config_gui.generic"),
-        HOTKEYS ("adv_keybind_manager.gui.button.config_gui.hotkeys"),
-        VANILLA ("adv_keybind_manager.gui.button.config_gui.vanilla"),
+        GENERIC ("adv_key_manager.gui.button.config_gui.generic"),
+        HOTKEYS ("adv_key_manager.gui.button.config_gui.hotkeys"),
+        VANILLA ("adv_key_manager.gui.button.config_gui.vanilla"),
         ;
 
         private final String translationKey;
