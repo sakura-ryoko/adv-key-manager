@@ -1,9 +1,9 @@
 {
-    "modmenu.descriptionTranslation.vkm": "Менеджер стандартних прив'язей клавіш для всіх, які будуть існувати в екосистемі MaLiLib",
+    "modmenu.descriptionTranslation.vkm": "Менеджер стандартних призначень клавіш для всіх, які будуть існувати в екосистемі MaLiLib",
     "vkm.config.generic.comment.debugMessages": "Журналювання налагодження.",
     "vkm.config.generic.name.debugMessages": "debugMessages",
     "vkm.config.hotkeys.comment.openConfigGui": "Відкрити налаштування.",
-    "vkm.config.hotkeys.comment.resetAllVanillaKeybinds": "Скидає всі стандартні прив'язі клавіш до усталених.",
+    "vkm.config.hotkeys.comment.resetAllVanillaKeybinds": "Скидає всі стандартні призначення клавіш до усталених.",
     "vkm.config.hotkeys.name.openConfigGui": "openConfigGui",
     "vkm.config.hotkeys.name.resetAllVanillaKeybinds": "resetAllVanillaKeybinds",
     "vkm.config.hotkeys.prettyName.resetAllVanillaKeybinds": "Скидання усіх стандартних призначень клавіш.",
