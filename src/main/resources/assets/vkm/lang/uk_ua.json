@@ -13,5 +13,5 @@
     "vkm.gui.title.configs": "Налаштування Vanilla Keybind Manager — %s",
     "vkm.hotkeys.category.hotkeys": "Гарячі клавіші Vanilla Keybind Manager",
     "vkm.message.reset_all_keybinds.error": "Вам потрібно закрити всі відкриті екрани, перш ніж скинути всі стандартні призначення клавіш.",
-    "vkm.message.reset_all_keybinds.success": "Усі стандартні призначення клавіш скинуто до стандартних значень"
+    "vkm.message.reset_all_keybinds.success": "Усі стандартні призначення клавіш скинуто до усталених значень"
 }
