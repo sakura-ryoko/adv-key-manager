@@ -30,6 +30,7 @@ import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
+import fi.dy.masa.malilib.config.options.ConfigString;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.JsonUtils;
 
@@ -42,18 +43,24 @@ import java.io.File;
 
 public class Configs implements IConfigHandler
 {
-    private static final String CONFIG_FILE_NAME = Reference.MOD_ID + ".json";
+    private static final String CONFIG_FILE_NAME = Reference.MOD_ID+".json";
 
     private static final String GENERIC_KEY = Reference.MOD_ID+".config.generic";
     public static class Generic
     {
 //#if MC >= 12100
-//$$        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean("debugMessages", true).apply(GENERIC_KEY);
+//$$        public static final ConfigString  CATEGORY_COLOR_PREFIX                 = new ConfigString  ("categoryColorPrefix", "§d").apply(GENERIC_KEY);
+//$$        public static final ConfigString  NAME_COLOR_PREFIX                     = new ConfigString  ("nameColorPrefix", "§b").apply(GENERIC_KEY);
+//$$        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean ("debugMessages", true).apply(GENERIC_KEY);
 //#else
-        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean("debugMessages", true, GENERIC_KEY+".comment.debugMessages");
+        public static final ConfigString  CATEGORY_COLOR_PREFIX                 = new ConfigString  ("categoryColorPrefix", "§d", GENERIC_KEY+".comment.categoryColorPrefix");
+        public static final ConfigString  NAME_COLOR_PREFIX                     = new ConfigString  ("nameColorPrefix", "§b", GENERIC_KEY+".comment.nameColorPrefix");
+        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean ("debugMessages", true, GENERIC_KEY+".comment.debugMessages");
 //#endif
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
+                CATEGORY_COLOR_PREFIX,
+                NAME_COLOR_PREFIX,
                 DEBUG_MESSAGES
         );
     }

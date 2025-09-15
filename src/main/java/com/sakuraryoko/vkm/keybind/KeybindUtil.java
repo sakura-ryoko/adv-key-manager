@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.sakuraryoko.vkm.VanKeyMngr;
+import com.sakuraryoko.vkm.config.Configs;
 import fi.dy.masa.malilib.util.KeyCodes;
 import org.jetbrains.annotations.Nullable;
 
@@ -210,7 +211,10 @@ public class KeybindUtil
 
     public static String buildConfigName(KeybindWrapper keybind)
     {
-        return "[§d" + keybind.getTranslatedCategory() + "§r] (§b" + keybind.getTranslatedId() +"§r)";
+        final String cat = Configs.Generic.CATEGORY_COLOR_PREFIX.getStringValue();
+        final String id = Configs.Generic.NAME_COLOR_PREFIX.getStringValue();
+
+        return "["+cat+keybind.getTranslatedCategory()+"§r] ("+id+keybind.getTranslatedId()+"§r)";
     }
 
     public static String buildConfigString(KeybindWrapper keybind)
@@ -225,11 +229,17 @@ public class KeybindUtil
 
     public static String buildConfigComment(KeybindWrapper keybind)
     {
-        return "Minecraft Keybind:\nCategory: §d" + keybind.getTranslatedCategory() + "\nName: §b" + keybind.getTranslatedId();
+        final String cat = Configs.Generic.CATEGORY_COLOR_PREFIX.getStringValue();
+        final String id = Configs.Generic.NAME_COLOR_PREFIX.getStringValue();
+
+        return "Minecraft Keybind:\nCategory: "+cat+keybind.getTranslatedCategory()+"§r\nName: "+id+keybind.getTranslatedId()+"§r";
     }
 
     public static String buildConfigPrettyName(KeybindWrapper keybind)
     {
-        return "[§d" + keybind.getTranslatedCategory() + "§r] (§b" + keybind.getTranslatedId() +"§r)";
+        final String cat = Configs.Generic.CATEGORY_COLOR_PREFIX.getStringValue();
+        final String id = Configs.Generic.NAME_COLOR_PREFIX.getStringValue();
+
+        return "["+cat+keybind.getTranslatedCategory()+"§r] ("+id+keybind.getTranslatedId()+"§r)";
     }
 }
