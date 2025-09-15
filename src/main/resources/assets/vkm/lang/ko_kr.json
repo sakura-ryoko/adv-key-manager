@@ -1,7 +1,11 @@
 {
     "modmenu.descriptionTranslation.vkm": "MaLiLib 생태계 내에 존재하는 모든 키지정을 위한 바닐라 키지정 관리자입니다.",
+    "vkm.config.generic.comment.categoryColorPrefix": "The prefix color of Categories for Keybind displays\nThis configuration uses the Vanilla color Formatter syntax",
     "vkm.config.generic.comment.debugMessages": "디버그 로그 기록",
+    "vkm.config.generic.comment.nameColorPrefix": "The prefix color of Ids for Keybind displays\nThis configuration uses the Vanilla color Formatter syntax",
+    "vkm.config.generic.name.categoryColorPrefix": "categoryColorPrefix",
     "vkm.config.generic.name.debugMessages": "디버그 메시지",
+    "vkm.config.generic.name.nameColorPrefix": "nameColorPrefix",
     "vkm.config.hotkeys.comment.openConfigGui": "설정 열기",
     "vkm.config.hotkeys.comment.resetAllVanillaKeybinds": "모든 바닐라 키지정을 기본값으로 재설정합니다.",
     "vkm.config.hotkeys.name.openConfigGui": "GUI 설정 열기",
