@@ -24,23 +24,25 @@ package com.sakuraryoko.vkm.keybind;
 //$$ import com.mojang.serialization.Codec;
 //#else
 //#endif
+import com.sakuraryoko.vkm.util.KeyType;
 import fi.dy.masa.malilib.hotkeys.*;
 import fi.dy.masa.malilib.util.KeyCodes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import com.sakuraryoko.vkm.util.KeyCodeWrapper;
-import com.sakuraryoko.vkm.util.KeyType;
 
 public class KeybindVanilla implements IKeybind
 {
-    private final KeybindSettings settings = KeybindSettings.EXCLUSIVE;
+    private final KeybindSettings settings = KeybindSettings.DEFAULT;
     private final KeybindWrapper keybind;
     @Nullable
     private IHotkeyCallback callback;
+    private boolean dirty = false;
 
     public KeybindVanilla(KeybindWrapper keybind)
     {
@@ -66,7 +68,23 @@ public class KeybindVanilla implements IKeybind
         return this.keybind != null;
     }
 
-//#if MC >= 12105
+    public boolean isDirty()
+    {
+        return this.dirty;
+    }
+
+    public void markDirty()
+    {
+        this.dirty = true;
+    }
+
+    public void markClean()
+    {
+        this.dirty = false;
+    }
+
+//#if MC >= 12109
+//#elseif MC >= 12105
     //$$ @Override
     //$$ public Codec<? extends IKeybind> codec()
     //$$ {
@@ -167,15 +185,39 @@ public class KeybindVanilla implements IKeybind
             return kbv.keybind.matchesKey(this.getKeyCode(), -1) || kbv.keybind.matchesMouse(this.getKeyCode());
         }
 
-		if (other.getSettings().getContext() != KeybindSettings.Context.INGAME)
-		{
-			return false;
-		}
+        // Cloned from KeybindMulti to have similar behavior.
+        if (this.contextOverlaps(other))
+        {
+            KeybindSettings settingsOther = other.getSettings();
+            boolean o1 = this.settings.isOrderSensitive();
+            boolean o2 = settingsOther.isOrderSensitive();
+            List<Integer> keys1 = this.getKeys();
+            List<Integer> keys2 = other.getKeys();
+            int l1 = keys1.size();
+            int l2 = keys2.size();
 
-		if (this.contextOverlaps(other))
-		{
-			return other.getKeys().getFirst() == this.getKeyCode();
-		}
+            if (l1 == 0 || l2 == 0)
+            {
+                return false;
+            }
+
+            if ((this.settings.getAllowExtraKeys() == false && l1 < l2 && keys1.get(0) != keys2.get(0)) ||
+                (settingsOther.getAllowExtraKeys() == false && l2 < l1 && keys1.get(0) != keys2.get(0)))
+            {
+                return false;
+            }
+
+            // Both are order sensitive, try to "slide the shorter sequence over the longer sequence" to find a match
+            if (o1 && o2)
+            {
+                return l1 < l2 ? Collections.indexOfSubList(keys2, keys1) != -1 : Collections.indexOfSubList(keys1, keys2) != -1;
+            }
+            // At least one of the keybinds is not order sensitive
+            else
+            {
+                return l1 <= l2 ? keys2.containsAll(keys1) : keys1.containsAll(keys2);
+            }
+        }
 
 		return false;
     }
@@ -192,7 +234,10 @@ public class KeybindVanilla implements IKeybind
 			KeyAction a1 = this.settings.getActivateOn();
 			KeyAction a2 = settingsOther.getActivateOn();
 
-			return a1 == KeyAction.BOTH || a2 == KeyAction.BOTH || a1 == a2;
+			if (a1 == KeyAction.BOTH || a2 == KeyAction.BOTH || a1 == a2)
+            {
+                return true;
+            }
 		}
 
 		return false;

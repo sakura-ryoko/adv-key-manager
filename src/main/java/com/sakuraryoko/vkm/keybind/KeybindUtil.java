@@ -21,7 +21,11 @@
 package com.sakuraryoko.vkm.keybind;
 
 import java.util.Map;
+//#if MC >= 12109
+//$$ import java.util.List;
+//#else
 import java.util.Set;
+//#endif
 
 import com.sakuraryoko.vkm.VanKeyMngr;
 import com.sakuraryoko.vkm.config.Configs;
@@ -38,21 +42,22 @@ import org.lwjgl.glfw.GLFW;
 
 public class KeybindUtil
 {
-//#if MC >= 11701
+//#if MC >= 12109
+    //$$ protected static final Map<String, KeyBinding> MAP_BY_ID = KeyBinding.KEYS_BY_ID;
+    //$$ protected static final Map<InputUtil.Key, List<KeyBinding>> MAP_BY_CODE = KeyBinding.KEY_TO_BINDINGS;
+    //$$ protected static final List<KeyBinding.Category> SET_CAT_LIST = KeyBinding.Category.CATEGORIES;
+//#elseif MC >= 11701
     //$$ protected static final Map<String, KeyBinding> MAP_BY_ID = KeyBinding.KEYS_BY_ID;
     //$$ protected static final Map<InputUtil.Key, KeyBinding> MAP_BY_CODE = KeyBinding.KEY_TO_BINDINGS;
     //$$ protected static final Set<String> SET_CAT_LIST = KeyBinding.KEY_CATEGORIES;
-    //$$ protected static final Map<String, Integer> MAP_CAT_ORDER = KeyBinding.CATEGORY_ORDER_MAP;
 //#elseif MC >= 11605
     //$$ protected static final Map<String, KeyBinding> MAP_BY_ID = KeyBinding.keysById;
     //$$ protected static final Map<InputUtil.Key, KeyBinding> MAP_BY_CODE = KeyBinding.keyToBindings;
     //$$ protected static final Set<String> SET_CAT_LIST = KeyBinding.keyCategories;
-    //$$ protected static final Map<String, Integer> MAP_CAT_ORDER = KeyBinding.categoryOrderMap;
 //#else
     protected static final Map<String, KeyBinding> MAP_BY_ID = KeyBinding.keysById;
     protected static final Map<InputUtil.KeyCode, KeyBinding> MAP_BY_CODE = KeyBinding.keysByCode;
     protected static final Set<String> SET_CAT_LIST = KeyBinding.keyCategories;
-    protected static final Map<String, Integer> MAP_CAT_ORDER = KeyBinding.categoryOrderMap;
 //#endif
     protected static final Map<String, InputUtil.KeyCode> MAP_BY_NAME = InputUtil.KeyCode.NAMES;
 
@@ -62,20 +67,13 @@ public class KeybindUtil
 		return MAP_BY_ID.getOrDefault(id, null);
 	}
 
-    @Nullable
-    protected static KeyBinding getByCodeVanilla(final InputUtil.KeyCode keyCode)
-    {
-        return MAP_BY_CODE.getOrDefault(keyCode, null);
-    }
-
-    protected static Set<String> getCategoriesVanilla()
+//#if MC >= 12109
+    //$$ public static List<KeyBinding.Category> getCategoriesVanilla()
+//#else
+    public static Set<String> getCategoriesVanilla()
+//#endif
     {
         return SET_CAT_LIST;
-    }
-
-    protected static Integer getCategoryOrderNumberVanilla(final String cat)
-    {
-        return MAP_CAT_ORDER.getOrDefault(cat, -1);
     }
 
     @Nullable
@@ -121,19 +119,6 @@ public class KeybindUtil
 		return new KeybindWrapper(keyBinding);
 	}
 
-	@Nullable
-    protected static KeybindWrapper getByCode(final InputUtil.KeyCode keyCode)
-	{
-		KeyBinding keyBinding = getByCodeVanilla(keyCode);
-
-		if (keyBinding == null)
-		{
-			return null;
-		}
-
-		return new KeybindWrapper(keyBinding);
-	}
-
     protected static boolean updateByID(final String id, InputUtil.KeyCode newKeyCode)
     {
         try
@@ -145,20 +130,6 @@ public class KeybindUtil
         catch (Exception err)
         {
             VanKeyMngr.LOGGER.error("updateByID: Exception while updating keybind '{}'; {}", id, err.getLocalizedMessage());
-            return false;
-        }
-    }
-
-    protected static boolean updateByCode(final InputUtil.KeyCode oldKeyCode, InputUtil.KeyCode newKeyCode)
-    {
-        try
-        {
-            // Extract the ID first
-            return updateByID(MAP_BY_CODE.get(oldKeyCode).getId(), newKeyCode);
-        }
-        catch (Exception err)
-        {
-            VanKeyMngr.LOGGER.error("updateByCode: Exception while updating keybind '{}'; {}", oldKeyCode.getName(), err.getLocalizedMessage());
             return false;
         }
     }
@@ -191,20 +162,6 @@ public class KeybindUtil
         catch (Exception err)
         {
             VanKeyMngr.LOGGER.error("resetByID: Exception while resetting keybind '{}'; {}", id, err.getLocalizedMessage());
-            return false;
-        }
-    }
-
-    protected static boolean resetByCode(InputUtil.KeyCode oldKeyCode)
-    {
-        try
-        {
-            // Extract the ID first
-            return resetByID(MAP_BY_CODE.get(oldKeyCode).getId());
-        }
-        catch (Exception err)
-        {
-            VanKeyMngr.LOGGER.error("resetByCode: Exception while updating keybind '{}'; {}", oldKeyCode.getName(), err.getLocalizedMessage());
             return false;
         }
     }

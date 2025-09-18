@@ -39,7 +39,7 @@ public class KeybindManager
 	private static final KeybindManager INSTANCE = new KeybindManager();
 	public static KeybindManager getInstance() { return INSTANCE; }
 	private final List<KeybindWrapper> keybinds;
-    private final Comparator<KeybindWrapper> CAT_COMPARATOR = Comparator.comparing(KeybindWrapper::getCategory);
+    private final Comparator<KeybindWrapper> CAT_COMPARATOR = Comparator.comparing(KeybindWrapper::getCategoryAsString);
     private final Comparator<KeybindWrapper> ID_COMPARATOR = Comparator.comparing(KeybindWrapper::getId);
     private final Comparator<KeybindWrapper> COMPARATOR = CAT_COMPARATOR.thenComparing(ID_COMPARATOR);
     public final List<ConfigKeybindVanilla> VANILLA_KEYBINDS;
@@ -98,6 +98,7 @@ public class KeybindManager
         this.VANILLA_KEYBINDS.addAll(builder.build());
 
         InputEventHandler.getKeybindManager().addHotkeysForCategory(Reference.MOD_ID, "minecraft", this.VANILLA_KEYBINDS);
+//        InputEventHandler.getKeybindManager().updateUsedKeys();
     }
 
 	public void resetAllKeybinds()

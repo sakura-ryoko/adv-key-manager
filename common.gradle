@@ -42,7 +42,7 @@ dependencies {
 //		modRuntimeOnly(mcVersion < 11900 ? "com.github.astei:lazydfu:0.1.2" : "com.github.Fallen-Breath:lazydfu:a7cfc44c0c")
 //	}
 //	// [FEATURE] MIXIN_AUDITOR
-	modRuntimeOnly 'me.fallenbreath:mixin-auditor:0.1.0'
+//	modRuntimeOnly 'me.fallenbreath:mixin-auditor:0.1.0'
 
 	// dependencies
 //	def fabricApiModules = ["fabric-resource-loader-v0"]
@@ -88,15 +88,15 @@ loom {
 		runDir '../../run'
 		vmArgs commonVmArgs
 	}
-	// [FEATURE] MIXIN_AUDITOR
-	runs {
-		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
-		clientMixinAudit {
-			client()
-			vmArgs auditVmArgs
-			ideConfigGenerated false
-		}
-	}
+//	// [FEATURE] MIXIN_AUDITOR
+//	runs {
+//		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
+//		clientMixinAudit {
+//			client()
+//			vmArgs auditVmArgs
+//			ideConfigGenerated false
+//		}
+//	}
 
     accessWidenerPath = file("src/main/resources/vkm.accesswidener")
 }

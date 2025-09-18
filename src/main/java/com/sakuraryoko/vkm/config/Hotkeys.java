@@ -23,7 +23,6 @@ package com.sakuraryoko.vkm.config;
 import com.google.common.collect.ImmutableList;
 import com.sakuraryoko.vkm.Reference;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
-import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 
 import java.util.List;
 
@@ -33,10 +32,10 @@ public class Hotkeys
 
 //#if MC >= 12100
 //$$    public static final ConfigHotkey OPEN_CONFIG_GUI				= new ConfigHotkey("openConfigGui", "O,C").apply(HOTKEYS_KEY);
-//$$    public static final ConfigHotkey RESET_ALL_VANILLA_KEYBINDS		= new ConfigHotkey("resetAllVanillaKeybinds", "", KeybindSettings.EXCLUSIVE).apply(HOTKEYS_KEY);
+//$$    public static final ConfigHotkey RESET_ALL_VANILLA_KEYBINDS		= new ConfigHotkey("resetAllVanillaKeybinds", "").apply(HOTKEYS_KEY);
 //#else
     public static final ConfigHotkey OPEN_CONFIG_GUI            = new ConfigHotkey("openConfigGui", "O,C", HOTKEYS_KEY+".comment.openConfigGui");
-	public static final ConfigHotkey RESET_ALL_VANILLA_KEYBINDS = new ConfigHotkey("resetAllVanillaKeybinds", "", KeybindSettings.EXCLUSIVE, HOTKEYS_KEY+".comment.resetAllVanillaKeybinds");
+	public static final ConfigHotkey RESET_ALL_VANILLA_KEYBINDS = new ConfigHotkey("resetAllVanillaKeybinds", "", HOTKEYS_KEY+".comment.resetAllVanillaKeybinds");
 //#endif
 
     public static final List<ConfigHotkey> HOTKEY_LIST = ImmutableList.of(

@@ -23,12 +23,16 @@ package com.sakuraryoko.vkm.keybind;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.sakuraryoko.vkm.VanKeyMngr;
+import com.sakuraryoko.vkm.util.KeyCategoryWrapper;
 import com.sakuraryoko.vkm.util.KeyCodeWrapper;
 import com.sakuraryoko.vkm.util.KeyType;
 import com.sakuraryoko.vkm.util.KeyTypeWrapper;
 //#if MC >= 12001
 //#else
 import net.minecraft.text.LiteralText;
+//#endif
+//#if MC >= 12109
+//$$ import net.minecraft.client.input.KeyInput;
 //#endif
 import net.minecraft.text.Text;
 
@@ -46,18 +50,18 @@ import fi.dy.masa.malilib.util.JsonUtils;
 public class KeybindWrapper
 {
 	private final String id;
-	private final String category;
+	private final KeyCategoryWrapper category;
 	private final KeyCodeWrapper defaultKeyCode;
 	private KeyCodeWrapper keyCode;
 	private String translationKey;
 	private boolean pressed;
 
-	public KeybindWrapper(String id, int keyCode, int scanCode, String category)
+	public KeybindWrapper(String id, int keyCode, int scanCode, KeyCategoryWrapper category)
 	{
 		this(id, keyCode, scanCode, category, id);
 	}
 
-	public KeybindWrapper(String id, int keyCode, int scanCode, String category, String translationKey)
+	public KeybindWrapper(String id, int keyCode, int scanCode, KeyCategoryWrapper category, String translationKey)
 	{
 		KeyTypeWrapper type = KeyTypeWrapper.fromKeyCode(keyCode, scanCode);
 
@@ -77,7 +81,7 @@ public class KeybindWrapper
 	public KeybindWrapper(KeyBinding keyBinding)
 	{
 		this.id = keyBinding.getId();
-		this.category = keyBinding.getCategory();
+		this.category = KeyCategoryWrapper.fromVanilla(keyBinding.getCategory());
 		this.defaultKeyCode = new KeyCodeWrapper(keyBinding.getDefaultKeyCode());
 		this.keyCode = new KeyCodeWrapper(keyBinding.keyCode);
         //#if MC >= 11605
@@ -88,7 +92,7 @@ public class KeybindWrapper
 		this.pressed = false;
 	}
 
-	private KeybindWrapper(String id, String category, String translationKey, KeyCodeWrapper def, KeyCodeWrapper key)
+	private KeybindWrapper(String id, KeyCategoryWrapper category, String translationKey, KeyCodeWrapper def, KeyCodeWrapper key)
 	{
 		this.id = id;
 		this.category = category;
@@ -123,12 +127,17 @@ public class KeybindWrapper
 		return this.id;
 	}
 
-	public String getCategory()
+	public KeyCategoryWrapper getCategory()
 	{
 		return this.category;
 	}
 
-	public KeyCodeWrapper getDefaultKeyCode()
+    public String getCategoryAsString()
+    {
+        return this.category.toString();
+    }
+
+    public KeyCodeWrapper getDefaultKeyCode()
 	{
 		return this.defaultKeyCode;
 	}
@@ -198,15 +207,22 @@ public class KeybindWrapper
 		return this.id;
 	}
 
+//#if MC >= 12109
+    //$$ public String getTranslatedCategory()
+    //$$ {
+        //$$ return this.category.getVanilla().getLabel().getString();
+    //$$ }
+//#else
     public String getTranslatedCategory()
     {
-        if (I18n.hasTranslation(this.category))
+        if (I18n.hasTranslation(this.category.getVanilla()))
         {
-            return I18n.translate(this.category);
+            return I18n.translate(this.category.getVanilla());
         }
 
-        return this.category;
+        return this.category.getVanilla();
     }
+//#endif
 
     public String getTranslatedId()
     {
@@ -269,18 +285,13 @@ public class KeybindWrapper
 		return KeybindUtil.getByIdVanilla(this.id);
 	}
 
-    public KeyBinding getVanillaByKeyCode()
-    {
-        return KeybindUtil.getByCodeVanilla(this.keyCode.getVanilla());
-    }
-
     public void reset()
     {
 		if (!this.isDefault())
 		{
 			VanKeyMngr.debugLog("KeybindWrapper#reset(): id: [{}]", this.id);
 			this.keyCode = this.defaultKeyCode;
-			KeybindUtil.updateByID(this.id, this.keyCode.getVanilla());
+			KeybindUtil.resetByID(this.id);
 		}
 
         this.pressed = false;
@@ -293,7 +304,11 @@ public class KeybindWrapper
 
 		if (type == KeyType.KEYBOARD)
 		{
-			keyCode = InputUtil.getKeyCode(key, scanCode);
+//#if MC >= 12109
+            //$$ keyCode = InputUtil.fromKeyCode(new KeyInput(key, scanCode, -1));
+//#else
+            keyCode = InputUtil.getKeyCode(key, scanCode);
+//#endif
 		}
 		else
 		{
@@ -337,8 +352,8 @@ public class KeybindWrapper
 		JsonObject obj = new JsonObject();
 
 		obj.addProperty("id", this.id);
-		obj.addProperty("category", this.category);
 		obj.addProperty("translationKey", this.translationKey);
+        obj.add("category", this.category.toJson());
 		obj.add("defaultKeyCode", this.defaultKeyCode.toJson());
 		obj.add("keyCode", this.keyCode.toJson());
 
@@ -355,7 +370,7 @@ public class KeybindWrapper
 				JsonObject obj = element.getAsJsonObject();
 
 				String id = "";
-				String cat = "";
+				KeyCategoryWrapper cat = null;
 				String transKey = "";
 				KeyCodeWrapper def = null;
 				KeyCodeWrapper key = null;
@@ -364,14 +379,14 @@ public class KeybindWrapper
 				{
 					id = obj.get("id").getAsString();
 				}
-				if (JsonUtils.hasString(obj, "category"))
-				{
-					cat = obj.get("category").getAsString();
-				}
 				if (JsonUtils.hasString(obj, "translationKey"))
 				{
 					transKey = obj.get("translationKey").getAsString();
 				}
+                if (JsonUtils.hasObject(obj, "category"))
+                {
+                    cat = KeyCategoryWrapper.fromJson(obj.get("category").getAsJsonObject());
+                }
 				if (JsonUtils.hasObject(obj, "defaultKeyCode"))
 				{
 					def = KeyCodeWrapper.fromJson(obj.get("defaultKeyCode").getAsJsonObject());
@@ -381,7 +396,7 @@ public class KeybindWrapper
 					key = KeyCodeWrapper.fromJson(obj.get("keyCode").getAsJsonObject());
 				}
 
-				if (!id.isEmpty() && def != null && key != null)
+				if (!id.isEmpty() && cat != null && def != null && key != null)
 				{
 					return new KeybindWrapper(id, cat, transKey, def, key);
 				}
@@ -400,8 +415,8 @@ public class KeybindWrapper
     {
         return "Keybind[" +
                "{id=" + this.id + "}" +
-               ",{category=" + this.category + "}" +
                ",{translationKey=" + this.translationKey + "}" +
+               ",{category=" + this.category.toString() + "}" +
                ",{defaultKeyCode=" + this.defaultKeyCode.toString() + "}" +
                ",{keyCode=" +
                (this.keyCode != null ? this.keyCode.toString() : "[NOT-BOUND]") +

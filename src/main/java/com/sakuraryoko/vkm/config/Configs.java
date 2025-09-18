@@ -50,18 +50,18 @@ public class Configs implements IConfigHandler
     {
 //#if MC >= 12100
 //$$        public static final ConfigString  CATEGORY_COLOR_PREFIX                 = new ConfigString  ("categoryColorPrefix", "§d").apply(GENERIC_KEY);
+//$$        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean ("debugMessages", false).apply(GENERIC_KEY);
 //$$        public static final ConfigString  NAME_COLOR_PREFIX                     = new ConfigString  ("nameColorPrefix", "§b").apply(GENERIC_KEY);
-//$$        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean ("debugMessages", true).apply(GENERIC_KEY);
 //#else
         public static final ConfigString  CATEGORY_COLOR_PREFIX                 = new ConfigString  ("categoryColorPrefix", "§d", GENERIC_KEY+".comment.categoryColorPrefix");
+        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean ("debugMessages", false, GENERIC_KEY+".comment.debugMessages");
         public static final ConfigString  NAME_COLOR_PREFIX                     = new ConfigString  ("nameColorPrefix", "§b", GENERIC_KEY+".comment.nameColorPrefix");
-        public static final ConfigBoolean DEBUG_MESSAGES                        = new ConfigBoolean ("debugMessages", true, GENERIC_KEY+".comment.debugMessages");
 //#endif
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
+                DEBUG_MESSAGES,
                 CATEGORY_COLOR_PREFIX,
-                NAME_COLOR_PREFIX,
-                DEBUG_MESSAGES
+                NAME_COLOR_PREFIX
         );
     }
 
