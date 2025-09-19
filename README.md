@@ -7,3 +7,5 @@ Vanilla Keybind Manager
 
 ###
 Use this addon to make MaLiLib keybinds to show incompatibilities with Vanilla Keybinds, and then edit the Vanilla keybinds if they conflict.
+
+Tired of fixing keybinds from different Keybind systems? This is your solution.
